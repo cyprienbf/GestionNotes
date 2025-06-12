@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
+{% load etudiant_extras %}
 
 {% block title %}Liste des Étudiants{% endblock %}
 
 {% block content %}
 <div class="page-header">
     <h2>Liste des Étudiants</h2>
-    <a href="{% url 'etudiants:etudiant_create' %}" class="btn btn-primary">Ajouter un Étudiant</a>
+    <div>
+        <a href="{% url 'etudiants:etudiant_list' %}" class="btn btn-secondary">Trier par Nom</a>
+        <a href="?sort=moyenne" class="btn btn-secondary">Trier par Moyenne</a>
+        <a href="{% url 'etudiants:etudiant_create' %}" class="btn btn-primary">Ajouter un Étudiant</a>
+    </div>
 </div>
 
 <table class="data-table">
@@ -15,18 +20,24 @@
             <th>Nom</th>
             <th>Prénom</th>
             <th>Groupe</th>
-            <th>Email</th>
+            <th>Moyenne Générale</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         {% for etudiant in etudiants %}
         <tr>
-            <td><a href="{{ etudiant.get_absolute_url }}">{{ etudiant.numero_etudiant }}</a></td>
+            <td><a href="{% url 'etudiants:etudiant_detail' etudiant.pk %}">{{ etudiant.numero_etudiant }}</a></td>
             <td>{{ etudiant.nom }}</td>
             <td>{{ etudiant.prenom }}</td>
             <td>{{ etudiant.groupe }}</td>
-            <td>{{ etudiant.email }}</td>
+            <td class="{% with moyenne=etudiant.moyenne_generale %}{{ moyenne|get_note_color_class }}{% endwith %}">
+                {% if etudiant.moyenne_generale is not None %}
+                    {{ etudiant.moyenne_generale|floatformat:2 }} / 20
+                {% else %}
+                    --
+                {% endif %}
+            </td>
             <td class="actions">
                 <a href="{% url 'etudiants:etudiant_update' etudiant.pk %}">Modifier</a>
                 <a href="{% url 'etudiants:etudiant_delete' etudiant.pk %}">Supprimer</a>

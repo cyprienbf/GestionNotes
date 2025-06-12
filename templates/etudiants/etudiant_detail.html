@@ -1,25 +1,89 @@
 {% extends 'base.html' %}
+{% load etudiant_extras %}
 
 {% block title %}{{ object.prenom }} {{ object.nom }}{% endblock %}
 
 {% block content %}
-<div class="page-header">
-    <h2>Détails de l'Étudiant</h2>
+<div class="student-profile-header">
+    <div class="student-info">
+        {% if object.photo %}
+            <img src="{{ object.photo.url }}" alt="Photo de {{ object.prenom }} {{ object.nom }}" class="student-photo">
+        {% endif %}
+        <div class="student-details">
+            <h2>{{ object.prenom }} {{ object.nom }}</h2>
+            <p><strong>N° Étudiant :</strong> {{ object.numero_etudiant }} | <strong>Groupe :</strong> {{ object.groupe }}</p>
+            <p><strong>Email :</strong> {{ object.email }}</p>
+        </div>
+    </div>
+    <div class="student-summary">
+        <h3>Synthèse Globale</h3>
+        <p>
+            Moyenne Générale : 
+            <strong class="{% with moyenne=object.moyenne_generale %}{{ moyenne|get_note_color_class }}{% endwith %}">
+                {{ object.moyenne_generale|floatformat:2|default:"N/A" }} / 20
+            </strong>
+        </p>
+        <p>Classement Général : <strong>{{ classement_general }}</strong></p>
+    </div>
 </div>
 
-<div class="detail-view">
-    {% if object.photo %}
-        <img src="{{ object.photo.url }}" alt="Photo de {{ object.prenom }} {{ object.nom }}" class="student-photo">
-    {% endif %}
-    <h3>{{ object.prenom }} {{ object.nom }}</h3>
-    <p><strong>Numéro Étudiant :</strong> {{ object.numero_etudiant }}</p>
-    <p><strong>Groupe :</strong> {{ object.groupe }}</p>
-    <p><strong>Email :</strong> {{ object.email }}</p>
+<div class="results-container">
+    <h3>Résultats Détaillés</h3>
+    {% for ue_data in resultats_par_ue %}
+    <div class="ue-card">
+        <div class="ue-header">
+            <h4>{{ ue_data.ue.nom }} (S{{ ue_data.ue.semestre }})</h4>
+            <div class="ue-summary">
+                <span>Moyenne UE : 
+                    <strong class="{% with moyenne=ue_data.moyenne %}{{ moyenne|get_note_color_class }}{% endwith %}">
+                        {{ ue_data.moyenne|floatformat:2 }} / 20
+                    </strong>
+                </span>
+                <span>Classement : <strong>{{ ue_data.classement }}</strong></span>
+            </div>
+        </div>
 
-    <div class="detail-actions">
-        <a href="{% url 'etudiants:etudiant_update' object.pk %}" class="btn btn-primary">Modifier</a>
-        <a href="{% url 'etudiants:etudiant_delete' object.pk %}" class="btn btn-danger">Supprimer</a>
-        <a href="{% url 'etudiants:etudiant_list' %}" class="btn btn-secondary">Retour à la liste</a>
+        {% for ressource_data in ue_data.ressources %}
+        <div class="ressource-card">
+            <div class="ressource-header">
+                <h5>{{ ressource_data.ressource.nom }} (Coeff: {{ ressource_data.ressource.coefficient }})</h5>
+                 <div class="ressource-summary">
+                    <span>Moyenne Ressource : 
+                        <strong class="{% with moyenne=ressource_data.moyenne %}{{ moyenne|get_note_color_class }}{% endwith %}">
+                            {{ ressource_data.moyenne|floatformat:2 }} / 20
+                        </strong>
+                    </span>
+                    <span>Classement : <strong>{{ ressource_data.classement }}</strong></span>
+                </div>
+            </div>
+            <table class="notes-table">
+                <thead>
+                    <tr>
+                        <th>Examen</th>
+                        <th>Note</th>
+                        <th>Appréciation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for note in ressource_data.notes %}
+                    <tr>
+                        <td>{{ note.examen.titre }} (Coeff: {{ note.examen.coefficient }})</td>
+                        <td class="{% with moyenne=note.note %}{{ moyenne|get_note_color_class }}{% endwith %}">{{ note.note|floatformat:2 }}</td>
+                        <td>{{ note.appreciation|default:"-" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
     </div>
+    {% empty %}
+    <p>Aucun résultat à afficher pour cet étudiant.</p>
+    {% endfor %}
+</div>
+
+<div class="detail-actions">
+    <a href="{% url 'etudiants:etudiant_update' object.pk %}" class="btn btn-primary">Modifier Fiche</a>
+    <a href="{% url 'etudiants:etudiant_list' %}" class="btn btn-secondary">Retour à la liste</a>
 </div>
 {% endblock %}

@@ -310,3 +310,135 @@ img {
 .home-info li {
     margin-bottom: 0.5rem;
 }
+
+/* --- Classes de couleur pour les notes --- */
+.note-bad {
+    color: #dc3545; /* Rouge */
+    font-weight: bold;
+}
+.note-ok {
+    color: #fd7e14; /* Orange */
+}
+.note-good {
+    color: #198754; /* Vert */
+    font-weight: bold;
+}
+.note-none {
+    color: #6c757d; /* Gris */
+}
+
+/* --- Styles pour la fiche étudiant (etudiant_detail.html) --- */
+.student-profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 1.5rem;
+    background-color: var(--header-footer-bg);
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.student-details h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.student-details p {
+    margin: 0;
+    line-height: 1.5;
+    color: #495057;
+}
+
+.student-summary {
+    text-align: right;
+    border-left: 3px solid var(--primary-color);
+    padding-left: 1.5rem;
+}
+.student-summary h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+.student-summary p {
+    margin: 0.25rem 0;
+    font-size: 1.1rem;
+}
+
+/* --- Conteneur des résultats --- */
+.results-container {
+    margin-top: 2rem;
+}
+
+.ue-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.ue-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ue-header h4 {
+    margin: 0;
+}
+.ue-summary {
+    display: flex;
+    gap: 2rem;
+}
+
+.ressource-card {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--secondary-color);
+}
+.ressource-card:last-child {
+    border-bottom: none;
+}
+
+.ressource-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.ressource-header h5 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+}
+.ressource-summary {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.notes-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.notes-table th, .notes-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--secondary-color);
+}
+.notes-table th {
+    background-color: var(--header-footer-bg);
+    font-weight: 500;
+}
+.notes-table tbody tr:last-child td {
+    border-bottom: none;
+}
