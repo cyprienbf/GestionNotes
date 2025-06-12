@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Détail Examen - {{ object.titre }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Détails de l'Examen</h2>
+</div>
+
+<div class="detail-view">
+    <h3>{{ object.titre }}</h3>
+    <p><strong>Date :</strong> {{ object.date|date:"d F Y" }}</p>
+    <p><strong>Ressource associée :</strong> {{ object.ressource.nom }}</p>
+    <p><strong>Enseignant responsable :</strong> {{ object.enseignant.user.get_full_name|default:"Non assigné" }}</p>
+    <p><strong>Coefficient de l'examen :</strong> {{ object.coefficient }}</p>
+
+    <div class="detail-actions">
+        <a href="{% url 'examens:examen_update' object.pk %}" class="btn btn-primary">Modifier</a>
+        <a href="{% url 'examens:examen_delete' object.pk %}" class="btn btn-danger">Supprimer</a>
+        <a href="{% url 'examens:examen_list' %}" class="btn btn-secondary">Retour à la liste</a>
+    </div>
+</div>
+{% endblock %}

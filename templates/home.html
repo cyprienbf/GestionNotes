@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Accueil - Gestionnaire de Notes{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Bienvenue sur le Gestionnaire de Notes BUT</h2>
+</div>
+
+<div class="home-container">
+    <p>Ce portail vous permet de gérer l'ensemble des informations relatives aux étudiants, aux unités d'enseignement et à leurs résultats.</p>
+    <p>Utilisez la navigation ci-dessus pour accéder aux différentes sections. Voici quelques raccourcis :</p>
+
+    <div class="quick-links">
+        <a href="{% url 'etudiants:etudiant_list' %}" class="btn btn-primary">Gérer les Étudiants</a>
+        <a href="{% url 'examens:examen_list' %}" class="btn btn-primary">Gérer les Examens</a>
+        <a href="{% url 'notes:note_list' %}" class="btn btn-primary">Gérer les Notes</a>
+    </div>
+
+    <div class="home-info">
+        <h3>Prochaines étapes :</h3>
+        <ul>
+            <li>Mise en place de l'authentification avec un portail Enseignant et un portail Étudiant.</li>
+            <li>Fonctionnalités de saisie de notes (manuelle et par import de fichier).</li>
+            <li>Génération de relevés de notes en PDF.</li>
+            <li>Calcul des classements par UE et général.</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

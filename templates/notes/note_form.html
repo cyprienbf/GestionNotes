@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Modifier Note{% else %}Ajouter Note{% endif %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{% if object %}Modifier la Note{% else %}Ajouter une nouvelle Note{% endif %}</h2>
+</div>
+
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <a href="{% url 'notes:note_list' %}" class="btn btn-secondary">Annuler</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.prenom }} {{ object.nom }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Détails de l'Étudiant</h2>
+</div>
+
+<div class="detail-view">
+    {% if object.photo %}
+        <img src="{{ object.photo.url }}" alt="Photo de {{ object.prenom }} {{ object.nom }}" class="student-photo">
+    {% endif %}
+    <h3>{{ object.prenom }} {{ object.nom }}</h3>
+    <p><strong>Numéro Étudiant :</strong> {{ object.numero_etudiant }}</p>
+    <p><strong>Groupe :</strong> {{ object.groupe }}</p>
+    <p><strong>Email :</strong> {{ object.email }}</p>
+
+    <div class="detail-actions">
+        <a href="{% url 'etudiants:etudiant_update' object.pk %}" class="btn btn-primary">Modifier</a>
+        <a href="{% url 'etudiants:etudiant_delete' object.pk %}" class="btn btn-danger">Supprimer</a>
+        <a href="{% url 'etudiants:etudiant_list' %}" class="btn btn-secondary">Retour à la liste</a>
+    </div>
+</div>
+{% endblock %}

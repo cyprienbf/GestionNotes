@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Enseignants{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Liste des Enseignants</h2>
+    <a href="{% url 'enseignants:enseignant_create' %}" class="btn btn-primary">Lier un Utilisateur</a>
+</div>
+
+<p class="info">Note: Pour créer un enseignant, <a href="/admin/auth/user/add/">créez d'abord un compte Utilisateur</a> dans l'admin, puis liez-le ici.</p>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Nom Complet</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for enseignant in enseignants %}
+        <tr>
+            <td><a href="{% url 'enseignants:enseignant_detail' enseignant.pk %}">{{ enseignant.user.get_full_name }}</a></td>
+            <td>{{ enseignant.user.email }}</td>
+            <td class="actions">
+                <a href="{% url 'enseignants:enseignant_update' enseignant.pk %}">Modifier</a>
+                <a href="{% url 'enseignants:enseignant_delete' enseignant.pk %}">Supprimer</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">Aucun enseignant trouvé.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

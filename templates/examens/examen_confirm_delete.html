@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmer la Suppression{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Confirmer la Suppression</h2>
+</div>
+
+<div class="detail-view">
+    <p>Êtes-vous sûr de vouloir supprimer l'examen "{{ object }}" ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="detail-actions">
+            <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+            <a href="{% url 'examens:examen_detail' object.pk %}" class="btn btn-secondary">Annuler</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

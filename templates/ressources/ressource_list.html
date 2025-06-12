@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Ressources{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Liste des Ressources</h2>
+    <a href="{% url 'ressources:ressource_create' %}" class="btn btn-primary">Ajouter une Ressource</a>
+</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Nom de la Ressource</th>
+            <th>UE Associée</th>
+            <th>Coefficient</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ressource in ressources %}
+        <tr>
+            <td><a href="{% url 'ressources:ressource_detail' ressource.pk %}">{{ ressource.code }}</a></td>
+            <td>{{ ressource.nom }}</td>
+            <td>{{ ressource.ue.nom }}</td>
+            <td>{{ ressource.coefficient }}</td>
+            <td class="actions">
+                <a href="{% url 'ressources:ressource_update' ressource.pk %}">Modifier</a>
+                <a href="{% url 'ressources:ressource_delete' ressource.pk %}">Supprimer</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Aucune ressource trouvée.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

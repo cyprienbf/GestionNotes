@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestionnaire de Notes BUT{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo-container">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'img/logo.png' %}" alt="Logo" class="logo">
+                <h1>Gestionnaire de Notes</h1>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{% url 'enseignants:enseignant_list' %}">Enseignants</a></li>
+                <li><a href="{% url 'etudiants:etudiant_list' %}">Étudiants</a></li>
+                <li><a href="{% url 'ues:ue_list' %}">UE</a></li>
+                <li><a href="{% url 'ressources:ressource_list' %}">Ressources</a></li>
+                <li><a href="{% url 'examens:examen_list' %}">Examens</a></li>
+                <li><a href="{% url 'notes:note_list' %}">Notes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>{% now "Y" %} - Projet Gestionnaire de Notes BUT</p>
+    </footer>
+</body>
+</html>

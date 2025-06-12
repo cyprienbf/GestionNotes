@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Modifier Examen{% else %}Ajouter Examen{% endif %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{% if object %}Modifier l'Examen{% else %}Ajouter un nouvel Examen{% endif %}</h2>
+</div>
+
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            <label for="id_titre">Titre:</label>
+            {{ form.titre }}
+        </p>
+        <p>
+            <label for="id_date">Date:</label>
+            {{ form.date }}
+            <small>Format: AAAA-MM-JJ</small>
+        </p>
+        <p>
+            <label for="id_coefficient">Coefficient:</label>
+            {{ form.coefficient }}
+        </p>
+        <p>
+            <label for="id_ressource">Ressource:</label>
+            {{ form.ressource }}
+        </p>
+        <p>
+            <label for="id_enseignant">Enseignant:</label>
+            {{ form.enseignant }}
+        </p>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <a href="{% url 'examens:examen_list' %}" class="btn btn-secondary">Annuler</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

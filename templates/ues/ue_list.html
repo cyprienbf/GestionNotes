@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Unités d'Enseignement{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Liste des Unités d'Enseignement (UE)</h2>
+    <a href="{% url 'ues:ue_create' %}" class="btn btn-primary">Ajouter une UE</a>
+</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Nom de l'UE</th>
+            <th>Semestre</th>
+            <th>Crédits ECTS</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ue in ues %}
+        <tr>
+            <td><a href="{% url 'ues:ue_detail' ue.pk %}">{{ ue.code }}</a></td>
+            <td>{{ ue.nom }}</td>
+            <td>{{ ue.semestre }}</td>
+            <td>{{ ue.credits_ects }}</td>
+            <td class="actions">
+                <a href="{% url 'ues:ue_update' ue.pk %}">Modifier</a>
+                <a href="{% url 'ues:ue_delete' ue.pk %}">Supprimer</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Aucune Unité d'Enseignement trouvée.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

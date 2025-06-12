@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Détail Ressource - {{ object.nom }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Détails de la Ressource</h2>
+</div>
+
+<div class="detail-view">
+    <h3>{{ object.code }} - {{ object.nom }}</h3>
+    <p><strong>Unité d'Enseignement (UE) :</strong> {{ object.ue.nom }}</p>
+    <p><strong>Coefficient :</strong> {{ object.coefficient }}</p>
+    <p><strong>Descriptif :</strong></p>
+    <p>{{ object.descriptif|linebreaksbr|default:"Aucun descriptif fourni." }}</p>
+
+    <div class="detail-actions">
+        <a href="{% url 'ressources:ressource_update' object.pk %}" class="btn btn-primary">Modifier</a>
+        <a href="{% url 'ressources:ressource_delete' object.pk %}" class="btn btn-danger">Supprimer</a>
+        <a href="{% url 'ressources:ressource_list' %}" class="btn btn-secondary">Retour à la liste</a>
+    </div>
+</div>
+{% endblock %}

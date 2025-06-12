@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Examens{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Liste des Examens</h2>
+    <a href="{% url 'examens:examen_create' %}" class="btn btn-primary">Ajouter un Examen</a>
+</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Date</th>
+            <th>Ressource</th>
+            <th>Enseignant</th>
+            <th>Coefficient</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for examen in examens %}
+        <tr>
+            <td><a href="{% url 'examens:examen_detail' examen.pk %}">{{ examen.titre }}</a></td>
+            <td>{{ examen.date|date:"d/m/Y" }}</td>
+            <td>{{ examen.ressource.nom }}</td>
+            <td>{{ examen.enseignant }}</td>
+            <td>{{ examen.coefficient }}</td>
+            <td class="actions">
+                <a href="{% url 'examens:examen_update' examen.pk %}">Modifier</a>
+                <a href="{% url 'examens:examen_delete' examen.pk %}">Supprimer</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">Aucun examen trouvé.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

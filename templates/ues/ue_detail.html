@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Détail UE - {{ object.nom }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Détails de l'Unité d'Enseignement</h2>
+</div>
+
+<div class="detail-view">
+    <h3>{{ object.code }} - {{ object.nom }}</h3>
+    <p><strong>Semestre :</strong> {{ object.semestre }}</p>
+    <p><strong>Crédits ECTS :</strong> {{ object.credits_ects }}</p>
+
+    <div class="detail-actions">
+        <a href="{% url 'ues:ue_update' object.pk %}" class="btn btn-primary">Modifier</a>
+        <a href="{% url 'ues:ue_delete' object.pk %}" class="btn btn-danger">Supprimer</a>
+        <a href="{% url 'ues:ue_list' %}" class="btn btn-secondary">Retour à la liste</a>
+    </div>
+</div>
+{% endblock %}

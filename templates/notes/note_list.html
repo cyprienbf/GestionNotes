@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Notes{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Liste de toutes les Notes</h2>
+    <a href="{% url 'notes:note_create' %}" class="btn btn-primary">Ajouter une Note</a>
+</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Étudiant</th>
+            <th>Examen</th>
+            <th>Note /20</th>
+            <th>Appréciation</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for note in notes %}
+        <tr>
+            <td>{{ note.etudiant }}</td>
+            <td><a href="{% url 'notes:note_detail' note.pk %}">{{ note.examen.titre }}</a></td>
+            <td>{{ note.note }}</td>
+            <td>{{ note.appreciation|truncatechars:50 }}</td>
+            <td class="actions">
+                <a href="{% url 'notes:note_update' note.pk %}">Modifier</a>
+                <a href="{% url 'notes:note_delete' note.pk %}">Supprimer</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Aucune note trouvée.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

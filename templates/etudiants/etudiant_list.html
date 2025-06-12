@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Étudiants{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Liste des Étudiants</h2>
+    <a href="{% url 'etudiants:etudiant_create' %}" class="btn btn-primary">Ajouter un Étudiant</a>
+</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>N° Étudiant</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Groupe</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for etudiant in etudiants %}
+        <tr>
+            <td><a href="{{ etudiant.get_absolute_url }}">{{ etudiant.numero_etudiant }}</a></td>
+            <td>{{ etudiant.nom }}</td>
+            <td>{{ etudiant.prenom }}</td>
+            <td>{{ etudiant.groupe }}</td>
+            <td>{{ etudiant.email }}</td>
+            <td class="actions">
+                <a href="{% url 'etudiants:etudiant_update' etudiant.pk %}">Modifier</a>
+                <a href="{% url 'etudiants:etudiant_delete' etudiant.pk %}">Supprimer</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">Aucun étudiant trouvé.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

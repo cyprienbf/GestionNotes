@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Modifier Ressource{% else %}Ajouter Ressource{% endif %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{% if object %}Modifier la Ressource{% else %}Ajouter une nouvelle Ressource{% endif %}</h2>
+</div>
+
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <a href="{% url 'ressources:ressource_list' %}" class="btn btn-secondary">Annuler</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
