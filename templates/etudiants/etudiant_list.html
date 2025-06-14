@@ -28,8 +28,8 @@
         {% for etudiant in etudiants %}
         <tr>
             <td><a href="{% url 'etudiants:etudiant_detail' etudiant.pk %}">{{ etudiant.numero_etudiant }}</a></td>
-            <td>{{ etudiant.nom }}</td>
-            <td>{{ etudiant.prenom }}</td>
+            <td><a href="{% url 'etudiants:etudiant_detail' etudiant.pk %}">{{ etudiant.nom }}</a></td>
+            <td><a href="{% url 'etudiants:etudiant_detail' etudiant.pk %}">{{ etudiant.prenom }}</a></td>
             <td>{{ etudiant.groupe }}</td>
             <td class="{% with moyenne=etudiant.moyenne_generale %}{{ moyenne|get_note_color_class }}{% endwith %}">
                 {% if etudiant.moyenne_generale is not None %}

@@ -8,10 +8,9 @@
 </div>
 
 <div class="detail-view">
-    <h3>{{ object.user.get_full_name }}</h3>
-    <p><strong>Nom d'utilisateur :</strong> {{ object.user.username }}</p>
-    <p><strong>Email :</strong> {{ object.user.email }}</p>
-
+    <h3>{{ object.prenom }} {{ object.nom }}</h3>
+    <p><strong>ID Enseignant :</strong> {{ object.id }}</p>
+    
     <div class="detail-actions">
         <a href="{% url 'enseignants:enseignant_update' object.pk %}" class="btn btn-primary">Modifier</a>
         <a href="{% url 'enseignants:enseignant_delete' object.pk %}" class="btn btn-danger">Supprimer</a>
