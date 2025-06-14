@@ -84,6 +84,7 @@
 
 <div class="detail-actions">
     <a href="{% url 'etudiants:etudiant_update' object.pk %}" class="btn btn-primary">Modifier Fiche</a>
+    <a href="{% url 'etudiants:etudiant_pdf' object.pk %}" class="btn btn-info" target="_blank">Télécharger en PDF</a>
     <a href="{% url 'etudiants:etudiant_list' %}" class="btn btn-secondary">Retour à la liste</a>
 </div>
 {% endblock %}

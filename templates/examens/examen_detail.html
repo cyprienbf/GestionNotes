@@ -16,6 +16,7 @@
 
     <div class="detail-actions">
         <a href="{% url 'examens:examen_update' object.pk %}" class="btn btn-primary">Modifier</a>
+        <a href="{% url 'examens:saisir_notes_csv' object.pk %}" class="btn btn-success">Saisir les notes (CSV)</a>
         <a href="{% url 'examens:examen_delete' object.pk %}" class="btn btn-danger">Supprimer</a>
         <a href="{% url 'examens:examen_list' %}" class="btn btn-secondary">Retour à la liste</a>
     </div>

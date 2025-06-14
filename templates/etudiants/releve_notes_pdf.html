@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+{% load etudiant_extras %}
+<head>
+    <meta charset="UTF-8">
+    <title>Relevé de notes de {{ etudiant.prenom }} {{ etudiant.nom }}</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 10pt;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5 {
+            margin: 0;
+            color: #005A9C; /* Couleur primaire */
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #005A9C;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header .student-info h1 {
+            font-size: 24pt;
+        }
+        .header .student-info p {
+            margin: 2px 0;
+        }
+        .header .meta-info {
+            text-align: right;
+            font-size: 9pt;
+        }
+        .summary {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+        }
+        .summary p {
+            margin: 5px 0;
+            font-size: 12pt;
+        }
+        .ue-card {
+            break-inside: avoid; /* Évite de couper une carte UE sur deux pages */
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .ue-header {
+            background-color: #005A9C;
+            color: white;
+            padding: 8px 12px;
+        }
+        .ue-header h3 {
+            color: white;
+            font-size: 14pt;
+        }
+        .ressource-card {
+            padding: 8px 12px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        .ressource-card:last-child { border-bottom: none; }
+        .ressource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .ressource-header h4 { font-size: 12pt; }
+        .notes-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+        .notes-table th, .notes-table td {
+            padding: 5px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .notes-table th { font-weight: bold; background-color: #f8f9fa; }
+        .footer {
+            position: fixed;
+            bottom: -1cm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 8pt;
+            color: #888;
+        }
+        .note-bad { color: #dc3545; font-weight: bold; }
+        .note-ok { color: #fd7e14; }
+        .note-good { color: #198754; font-weight: bold; }
+        .note-none { color: #6c757d; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="student-info">
+            <h1>Relevé de Notes</h1>
+            <p><strong>Étudiant :</strong> {{ etudiant.prenom }} {{ etudiant.nom }}</p>
+            <p><strong>N° :</strong> {{ etudiant.numero_etudiant }} | <strong>Groupe :</strong> {{ etudiant.groupe }}</p>
+        </div>
+        <div class="meta-info">
+            <p><strong>BUT Réseaux et Télécommunications</strong></p>
+            <p>Année universitaire 2024-2025</p>
+            <p>Généré le {{ generation_date|date:"d/m/Y à H:i" }}</p>
+        </div>
+    </div>
+
+    <div class="summary">
+        <h3>Synthèse</h3>
+        <p><strong>Moyenne Générale :</strong> <strong class="{% with moyenne=etudiant.moyenne_generale %}{{ moyenne|get_note_color_class }}{% endwith %}">{{ etudiant.moyenne_generale|floatformat:2|default:"N/A" }} / 20</strong></p>
+        <p><strong>Classement Général :</strong> <strong>{{ classement_general }}</strong></p>
+    </div>
+
+    {% for ue_data in resultats_par_ue %}
+    <div class="ue-card">
+        <div class="ue-header">
+            <h3>{{ ue_data.ue.nom }} (S{{ ue_data.ue.semestre }}) - Moyenne : <strong class="{% with moyenne=ue_data.moyenne %}{{ moyenne|get_note_color_class }}{% endwith %}">{{ ue_data.moyenne|floatformat:2 }}</strong> - Classement : {{ ue_data.classement }}</h3>
+        </div>
+        {% for ressource_data in ue_data.ressources %}
+        <div class="ressource-card">
+            <div class="ressource-header">
+                <h4>{{ ressource_data.ressource.nom }} (Coeff: {{ ressource_data.ressource.coefficient }})</h4>
+                <span>Moyenne : <strong class="{% with moyenne=ressource_data.moyenne %}{{ moyenne|get_note_color_class }}{% endwith %}">{{ ressource_data.moyenne|floatformat:2 }}</strong> | Classement : {{ ressource_data.classement }}</span>
+            </div>
+            <table class="notes-table">
+                <thead><tr><th>Examen</th><th>Note</th><th>Appréciation</th></tr></thead>
+                <tbody>
+                    {% for note in ressource_data.notes %}
+                    <tr>
+                        <td>{{ note.examen.titre }} (Coeff: {{ note.examen.coefficient }})</td>
+                        <td class="{% with moyenne=note.note %}{{ moyenne|get_note_color_class }}{% endwith %}">{{ note.note|floatformat:2 }}</td>
+                        <td>{{ note.appreciation|default:"-" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    <div class="footer">
+        Gestionnaire de Notes BUT - Document généré automatiquement
+    </div>
+</body>
+</html>

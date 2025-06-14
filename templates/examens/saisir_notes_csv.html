@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Saisie des notes par CSV{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Saisie des notes par CSV pour l'examen "{{ examen.titre }}"</h2>
+</div>
+
+<div class="csv-instructions">
+    <h3>Instructions pour le fichier CSV</h3>
+    <p>Pour importer les notes, veuillez préparer un fichier <code>.csv</code> respectant les règles suivantes :</p>
+    <ul>
+        <li>Le fichier doit utiliser l'encodage <strong>UTF-8</strong>.</li>
+        <li>Le séparateur de colonnes doit être un <strong>point-virgule (;)</strong>.</li>
+        <li>La première ligne du fichier doit contenir les en-têtes et sera ignorée.</li>
+        <li>Les décimaux pour les notes peuvent utiliser un point (<code>.</code>) ou une virgule (<code>,</code>).</li>
+    </ul>
+    <h4>Structure des colonnes :</h4>
+    <ol>
+        <li><strong>numero_etudiant</strong> : Le numéro unique de l'étudiant (ex: E2024001).</li>
+        <li><strong>note</strong> : La note de l'étudiant sur 20.</li>
+        <li><strong>appreciation</strong> (optionnel) : Un court commentaire sur le travail de l'étudiant.</li>
+    </ol>
+    <h4>Exemple de contenu :</h4>
+    <pre><code>E2024001;14,5;Bon travail, progresse bien.E2024002;8;Des difficultés sur la partie pratique.E2024003;17;Excellent !</code></pre>
+</div>
+
+{% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="form-container" style="margin-top: 2rem;">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Importer le fichier</button>
+            <a href="{% url 'examens:examen_detail' examen.pk %}" class="btn btn-secondary">Retour à l'examen</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

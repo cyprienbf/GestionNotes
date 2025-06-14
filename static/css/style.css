@@ -442,3 +442,64 @@ img {
 .notes-table tbody tr:last-child td {
     border-bottom: none;
 }
+
+/* --- Styles pour la page d'upload CSV --- */
+.csv-instructions {
+    background-color: #f0f8ff; /* AliceBlue */
+    border: 1px solid #cce5ff;
+    border-left: 5px solid var(--primary-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+}
+
+.csv-instructions h3, .csv-instructions h4 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.csv-instructions ul, .csv-instructions ol {
+    margin-left: 20px;
+    margin-bottom: 1rem;
+}
+
+.csv-instructions pre {
+    background-color: #e9ecef;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* --- Styles pour les messages de feedback --- */
+.messages-container {
+    margin: 1.5rem 0;
+}
+.message {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    color: white;
+}
+.message.success {
+    background-color: var(--success-color);
+}
+.message.info {
+    background-color: #0dcaf0; /* Cyan */
+}
+.message.warning {
+    background-color: #ffc107; /* Jaune */
+    color: #333;
+}
+.message.error {
+    background-color: var(--danger-color);
+}
+
+.btn-info {
+    background-color: #0dcaf0;
+    color: white;
+}
+.btn-info:hover {
+    background-color: #0b9ab8;
+    color: white;
+}
