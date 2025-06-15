@@ -1,0 +1,8 @@
+# Configuration personnalisée pour le projet Django
+
+[mysqld]
+# N'écoute que sur l'adresse IP de cette VM sur le réseau privé
+bind-address = __DB_VM_IP__
+
+# Option pour éviter les problèmes de résolution DNS inverse (recommandé)
+skip-name-resolve

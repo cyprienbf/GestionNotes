@@ -1,0 +1,17 @@
+server {
+    listen 80;
+    server_name __WEB_VM_IP__ __DOMAIN_NAME__;
+
+    location /static/ {
+        alias __PROJECT_DIR__/staticfiles/;
+    }
+
+    location /media/ {
+        alias __PROJECT_DIR__/media/;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:__PROJECT_DIR__/gunicorn.sock;
+    }
+}

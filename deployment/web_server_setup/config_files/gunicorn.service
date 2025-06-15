@@ -1,0 +1,12 @@
+[Unit]
+Description=gunicorn daemon for Django project
+After=network.target
+
+[Service]
+User=__SYSTEM_USER__
+Group=www-data
+WorkingDirectory=__PROJECT_DIR__
+ExecStart=__PROJECT_DIR__/venv/bin/gunicorn --access-logfile - --workers 3 --bind unix:__PROJECT_DIR__/gunicorn.sock __MAIN_PROJECT_NAME__.wsgi:application
+
+[Install]
+WantedBy=multi-user.target

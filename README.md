@@ -81,7 +81,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 5. Configurer la base de données
+### 4. Configurer la base de données
 ```bash
 # Appliquer les migrations pour créer les tables de la base de données
 python manage.py migrate
@@ -91,11 +91,67 @@ python manage.py createsuperuser
 ```
 *(Suivez les instructions pour créer votre compte administrateur)*
 
-### 6. Lancer le serveur de développement
+### 5. Lancer le serveur de développement
 ```bash
 python manage.py runserver
 ```
 L'application est maintenant accessible à l'adresse **http://127.0.0.1:8000/**.
+
+🏗️ Architecture et Déploiement en Production
+
+Pour un déploiement robuste, le projet est conçu pour être hébergé sur une architecture à deux machines virtuelles (VMs) : une pour l'application web et une pour la base de données. Cette séparation améliore la sécurité et les performances.
+Schéma de l'Architecture
+
+![alt text](presentation/architecture_de_deploiement.svg)
+
+Déploiement Automatisé avec les Scripts
+
+Des scripts shell sont fournis pour automatiser entièrement la configuration des deux VMs Debian 12 avec Virt-Manager.
+1. Préparation
+
+    Assurez-vous d'avoir Virt-Manager installé.
+
+    Créez deux VMs Debian 12 vierges et connectez-les à un même réseau virtuel (ex: 192.168.100.0/24).
+
+2. Configuration du Serveur de Base de Données
+
+    Objectif : Installer et configurer MariaDB pour n'accepter que les connexions de la VM Web.
+
+    Actions :
+
+        Copiez le dossier db_server_setup (contenant setup_db.sh et le dossier config_files) sur la VM de la base de données.
+
+        Modifiez les variables (IPs, mots de passe) au début du script setup_db.sh.
+
+        Rendez le script exécutable : chmod +x setup_db.sh.
+
+        Exécutez-le en tant que root : sudo ./setup_db.sh.
+
+    Le script s'occupe de tout : installation, copie des configurations, création de la base de données et configuration du pare-feu.
+
+3. Configuration du Serveur Web
+
+    Objectif : Installer Nginx, Gunicorn et le projet Django. Nginx servira de reverse proxy pour Gunicorn, qui exécute l'application.
+
+    Actions :
+
+        Copiez le dossier web_server_setup (contenant setup_web.sh et ses config_files) sur la VM web.
+
+        Modifiez les variables (IPs, mots de passe, URL du dépôt Git, etc.) au début du script setup_web.sh.
+
+        Rendez le script exécutable : chmod +x setup_web.sh.
+
+        Exécutez-le en tant que root : sudo ./setup_web.sh.
+
+    Le script clone le projet, installe les dépendances, configure Django pour la production, met en place les services gunicorn et nginx, et configure le pare-feu.
+
+Une fois les deux scripts exécutés, l'application sera accessible à l'adresse IP de la VM Web.
+
+🗃️ Modèle de Données
+
+Le schéma ci-dessous représente les relations entre les différentes entités de la base de données (Étudiants, UE, Examens, Notes, etc.).
+
+![alt text](presentation/shema_relationnel_de_la_db.svg)
 
 ## 📁 Structure du projet
 
