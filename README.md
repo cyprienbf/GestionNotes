@@ -102,7 +102,7 @@ L'application est maintenant accessible à l'adresse **http://127.0.0.1:8000/**.
 Pour un déploiement robuste, le projet est conçu pour être hébergé sur une architecture à deux machines virtuelles (VMs) : une pour l'application web et une pour la base de données. Cette séparation améliore la sécurité et les performances.
 Schéma de l'Architecture
 
-![alt text](presentation/assets/architecture_de_deploiement.svg)
+![alt text](presentation/assets/architecture_de_deploiement.png)
 
 Déploiement Automatisé avec les Scripts
 
@@ -152,7 +152,7 @@ Une fois les deux scripts exécutés, l'application sera accessible à l'adresse
 
 Le schéma ci-dessous représente les relations entre les différentes entités de la base de données (Étudiants, UE, Examens, Notes, etc.).
 
-![alt text](presentation/assets/shema_relationnel_de_la_db.svg)
+![alt text](presentation/assets/shema_relationnel_de_la_db.png)
 
 ## 📁 Structure du projet
 
