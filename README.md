@@ -182,3 +182,5 @@ Le projet est organisé en plusieurs applications Django, chacune ayant une resp
 ## 📄 Licence
 
 Ce projet est distribué sous la **licence MIT**. Voir le fichier `LICENSE` pour plus de détails.
+
+[![Star History Chart](https://api.star-history.com/svg?repos=cyprienbf/GestionNotes&type=Date)](https://star-history.com/#cyprienbf/GestionNotes&Date)

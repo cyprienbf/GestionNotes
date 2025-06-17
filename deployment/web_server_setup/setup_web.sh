@@ -24,14 +24,14 @@ CONFIG_DIR="$(pwd)/config_files"
 echo ">>> Étape 1 : Mise à jour et installation des dépendances..."
 apt-get update
 apt-get upgrade -y
-apt-get install -y python3-venv python3-pip python3-dev default-libmysqlclient-dev nginx git ufw
+apt-get install -y python3-venv python3-pip python3-dev default-libmysqlclient-dev nginx git ufw sudo
 useradd -r -s /bin/false $SYSTEM_USER || echo "Utilisateur '$SYSTEM_USER' existe déjà."
 
 # --- ÉTAPE 2 : DÉPLOIEMENT DU PROJET ---
 echo ">>> Étape 2 : Clonage du projet et configuration de l'environnement..."
 git clone "$PROJECT_REPO" "$PROJECT_DIR"
 chown -R $SYSTEM_USER:$SYSTEM_USER "$PROJECT_DIR"
-sudo -u $SYSTEM_USER bash -c "cd $PROJECT_DIR && python3 -m venv venv && source venv/bin/activate && pip install --upgrade pip && pip install django gunicorn mysqlclient pillow weasyprint"
+sudo -u $SYSTEM_USER bash -c "cd $PROJECT_DIR && python3 -m venv venv && source venv/bin/activate && pip install --upgrade pip && pip install django gunicorn pillow weasyprint pymysql" # mysqlclient?
 
 # --- ÉTAPE 3 : CONFIGURATION DE DJANGO ---
 echo ">>> Étape 3 : Copie et adaptation du fichier de configuration Django..."
