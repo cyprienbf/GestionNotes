@@ -158,7 +158,7 @@ Le schéma ci-dessous représente les relations entre les différentes entités 
 
 Le projet est organisé en plusieurs applications Django, chacune ayant une responsabilité unique :
 
--   `presentation/` : Fichiers de présentations du projet (GANTT, Planning, Schéma relationnel de la base de donnée, etc.)
+-   `presentation/` : Fichiers de présentations du projet (GANTT, Planning, Schéma relationnel de la base de donnée, dump SQL de la db, etc.)
 -   `deployment/` : Scripts Bash et configurations des services Debian pour le déploiement.
 -   `gestion_notes/` : Fichiers de configuration du projet (settings, urls globales).
 -   `etudiants/` : Gestion du CRUD et de la logique métier des étudiants.
