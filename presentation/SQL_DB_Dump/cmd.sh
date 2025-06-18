@@ -1,0 +1,1 @@
+mysqldump -u root -p gestion_notes_db > out.sql
